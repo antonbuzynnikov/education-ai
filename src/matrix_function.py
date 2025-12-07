@@ -23,14 +23,16 @@ def add(first_matrix, second_matrix):
         raise ValueError('Вторая матрица некорректна: строки имеют разную длину')
     if len(first_matrix) != len(second_matrix) or len(first_matrix[0]) != len(second_matrix[0]):
         raise ValueError('Размерности матриц должны совпадать')
-    result = [[0 for _ in range(len(second_matrix[0]))] for _ in range(len(first_matrix))]
-    for i in range(len(first_matrix)):
-        for j in range(len(second_matrix[0])):
-            result[i][j] += first_matrix[i][j] + second_matrix[i][j]
-    return result
+    return [[first_matrix[i][j] + second_matrix[i][j] for j in range(len(first_matrix[0]))] for i in range(len(first_matrix))]
 
 def _is_valid_matrix(matrix):
     if not matrix or not matrix[0]:
         return True
     row_length = len(matrix[0])
     return all(len(row) == row_length for row in matrix)
+
+def scalar_product(matrix, scalar):
+    if not _is_valid_matrix(matrix):
+        raise ValueError('Матрица некорректна: строки имеют разную длину')
+
+    return [[element * scalar for element in row] for row in matrix]
