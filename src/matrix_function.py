@@ -24,7 +24,10 @@ def add(first_matrix, second_matrix):
     if len(first_matrix) != len(second_matrix) or len(first_matrix[0]) != len(second_matrix[0]):
         raise ValueError('Размерности матриц должны совпадать')
     result = [[0 for _ in range(len(second_matrix[0]))] for _ in range(len(first_matrix))]
-    return [[result[i][j] + second_matrix[i][j] for j in range(len(second_matrix[0]))] for i in range(len(first_matrix))]
+    for i in range(len(first_matrix)):
+        for j in range(len(second_matrix[0])):
+            result[i][j] += first_matrix[i][j] + second_matrix[i][j]
+    return result
 
 def _is_valid_matrix(matrix):
     if not matrix or not matrix[0]:

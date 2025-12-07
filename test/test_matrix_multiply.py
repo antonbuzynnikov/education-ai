@@ -1,5 +1,5 @@
 import unittest
-import matrix_function as mf
+from src import matrix_function as mf
 
 
 class MatrixMultiplyUnitTest(unittest.TestCase):

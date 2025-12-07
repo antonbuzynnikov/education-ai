@@ -1,5 +1,5 @@
 import unittest
-from src.linear_algebra.matrix_function import add
+from src.matrix_function import add
 
 class TestMatrixAddition(unittest.TestCase):
 
@@ -44,16 +44,6 @@ class TestMatrixAddition(unittest.TestCase):
         second = [[]]
         expected = [[]]
         self.assertEqual(add(first, second), expected)
-
-    def test_add_matrices_with_different_inner_lengths_should_raise_error(self):
-        # Это важно: внутренние списки должны быть одинаковой длины
-        first = [[1, 2], [3]]
-        second = [[4, 5], [6, 7]]
-        # Здесь first[1] имеет длину 1, а second[1] — 2
-        # Но наша функция проверяет только первую строку
-        # Поэтому лучше уточнить, что вход — корректные матрицы
-        # В реальности стоит добавить валидацию матрицы отдельно
-        pass  # Пока пропустим, так как функция предполагает валидный ввод
 
 if __name__ == '__main__':
     unittest.main()
