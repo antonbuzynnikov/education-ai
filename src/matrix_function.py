@@ -36,3 +36,30 @@ def scalar_product(matrix, scalar):
         raise ValueError('Матрица некорректна: строки имеют разную длину')
 
     return [[element * scalar for element in row] for row in matrix]
+
+def determinant(matrix):
+    n = len(matrix)
+
+    if n == 0:
+        return 1
+    if n == 1:
+        return matrix[0][0]
+    if n == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+    det = 0
+
+    for col in range(n):
+        minor = []
+        for i in range(1, n):
+            minor_row = []
+            for j in range(n):
+                if j != col:
+                    minor_row.append(matrix[i][j])
+            minor.append(minor_row)
+
+        cofactor = ((-1) ** col) * determinant(minor)
+
+        det += matrix[0][col] * cofactor
+
+    return det
