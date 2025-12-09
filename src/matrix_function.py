@@ -63,3 +63,56 @@ def determinant(matrix):
         det += matrix[0][col] * cofactor
 
     return det
+
+def matrix_rank_and_basis_minor(matrix):
+    if not matrix or not matrix[0]:
+        return 0, [], [], 0
+    a = [row[:] for row in matrix]
+    rows = len(a)
+    cols = len(a[0])
+    lead = 0
+    row_indices_pivot = []
+    col_indices_pivot = []
+    for r in range(rows):
+        if lead >= cols:
+            break
+        i = r
+        while i < rows and a[i][lead] == 0:
+            i += 1
+        if i == rows:
+            lead += 1
+            r -= 1
+            continue
+        if i != r:
+            a[r], a[i] = a[i], a[r]
+        row_indices_pivot.append(i)
+        col_indices_pivot.append(lead)
+
+        pivot = a[r][lead]
+        for j in range(lead, cols):
+            a[r][j] /= pivot
+        for i in range(rows):
+            if i != r:
+                factor = a[i][lead]
+                for j in range(lead, cols):
+                    a[i][j] -= factor * a[r][j]
+        lead += 1
+
+    rank = len(row_indices_pivot)
+
+    if rank == 0:
+        return 0, [], [], 0
+
+    original = matrix
+
+    pivot_pairs = sorted(zip(row_indices_pivot, col_indices_pivot), key=lambda x: x[0])
+    final_rows = [p[0] for p in pivot_pairs]
+    final_cols = [p[1] for p in pivot_pairs]
+
+    # Выбираем подматрицу из оригинальной матрицы
+    submatrix = [[original[i][j] for j in final_cols] for i in final_rows]
+
+    # Вычисляем определитель этой подматрицы
+    minor_value = determinant(submatrix)
+
+    return minor_value, final_rows, final_cols, rank
